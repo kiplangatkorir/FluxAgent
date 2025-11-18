@@ -100,11 +100,13 @@ def run_agent(
         verbose=True,
         handle_parsing_errors=True,
     )
+    context_blob = "\n\n".join(doc.page_content for doc in rag_docs)
+    agent_input = (
+        "You are FluxAgent. Use the supplied enterprise context when helpful.\n"
+        f"Context:\n{context_blob}\n\nQuestion: {query}"
+    )
     result = agent_executor.invoke(
-        {
-            "input": query,
-            "context": "\n\n".join(doc.page_content for doc in rag_docs),
-        },
+        {"input": agent_input},
         callbacks=[timeline_handler, langfuse_handler],
     )
     return {

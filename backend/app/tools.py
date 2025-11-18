@@ -142,41 +142,57 @@ def _sql_fetch(sql: str) -> str:
 
 
 def build_tools() -> List[StructuredTool]:
+    def search_tool(query: str) -> str:
+        return _mock_search(query)
+
+    def calculator_tool(expression: str) -> str:
+        return _evaluate_expression(expression)
+
+    def rag_tool(query: str, top_k: int = 3) -> str:
+        return _rag_lookup(query, top_k)
+
+    def send_mail_tool(to: str, subject: str, body: str) -> str:
+        return _send_mail(to, subject, body)
+
+    def http_tool(path: str, method: str = "GET", payload: Dict[str, Any] | None = None) -> str:
+        return _http_call(path, method, payload)
+
+    def sql_tool(sql: str) -> str:
+        return _sql_fetch(sql)
+
     return [
         StructuredTool.from_function(
-            func=lambda query: _mock_search(query),
+            func=search_tool,
             name="web_search",
             description="Useful for searching recent knowledge base snippets.",
             args_schema=SearchInput,
         ),
         StructuredTool.from_function(
-            func=lambda expression: _evaluate_expression(expression),
+            func=calculator_tool,
             name="calculator",
             description="Evaluate arithmetic expressions safely.",
             args_schema=CalculatorInput,
         ),
         StructuredTool.from_function(
-            func=lambda query, top_k=3: _rag_lookup(query, top_k),
+            func=rag_tool,
             name="document_rag_lookup",
             description="Look up enterprise documents stored in pgvector.",
             args_schema=RagInput,
         ),
         StructuredTool.from_function(
-            func=lambda to, subject, body: _send_mail(to, subject, body),
+            func=send_mail_tool,
             name="send_mail",
             description="Send a mock email that is logged to disk.",
             args_schema=SendMailInput,
         ),
         StructuredTool.from_function(
-            func=lambda path, method="GET", payload=None: _http_call(
-                path, method, payload
-            ),
+            func=http_tool,
             name="http_webhook",
             description="Make HTTP GET/POST requests to webhook.site endpoint.",
             args_schema=HttpInput,
         ),
         StructuredTool.from_function(
-            func=lambda sql: _sql_fetch(sql),
+            func=sql_tool,
             name="sql_fetch",
             description="Run read-only SQL queries over support_records.",
             args_schema=SqlFetchInput,
