@@ -1,0 +1,113 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: fluxagent-postgres
+    environment:
+      POSTGRES_DB: fluxagent
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  langfuse:
+    image: langfuse/langfuse:latest
+    container_name: fluxagent-langfuse
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/fluxagent
+      NEXTAUTH_SECRET: langfuse-secret-key-change-in-production
+      NEXTAUTH_URL: http://localhost:3000
+      LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES: "true"
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/public/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: fluxagent-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fluxagent-backend
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: fluxagent
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGVECTOR_COLLECTION: flux_documents
+      LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-pk-lf-placeholder}
+      LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-sk-lf-placeholder}
+      LANGFUSE_HOST: http://langfuse:3000
+      DEFAULT_LLM_PROVIDER: ollama
+      DEFAULT_LLM_MODEL: phi3
+      OLLAMA_BASE_URL: http://ollama:11434
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./storage/uploads:/app/storage/uploads
+      - ./storage/logs:/app/storage/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      langfuse:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+    command: >
+      sh -c "
+        sleep 5 &&
+        python cli.py init_db &&
+        uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      "
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: fluxagent-frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+
+volumes:
+  postgres_data:
+  ollama_data:
+
