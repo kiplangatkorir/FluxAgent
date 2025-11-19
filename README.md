@@ -1,2 +1,2 @@
 # FluxAgent
-Full sStack AI Agent System
+Full Stack AI Agent System
