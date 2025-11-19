@@ -7,6 +7,7 @@ from langchain_core.language_models.chat_models import BaseChatModel
 
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
+from langchain_community.chat_models import ChatOllama
 
 try:
     from langchain_groq import ChatGroq
@@ -68,6 +69,12 @@ def _resolve_llm(provider: Optional[str], model: Optional[str]) -> BaseChatModel
             model=model,
             temperature=0.2,
             anthropic_api_key=settings.anthropic_api_key,
+        )
+    if provider == "ollama":
+        return ChatOllama(
+            model=model,
+            base_url=settings.ollama_base_url,
+            temperature=0.2,
         )
     if provider == "groq" and ChatGroq:
         return ChatGroq(

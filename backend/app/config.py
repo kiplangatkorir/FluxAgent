@@ -33,13 +33,22 @@ class Settings(BaseModel):
     )
 
     # LLM Providers
-    default_provider: str = Field(default=os.getenv("DEFAULT_LLM_PROVIDER", "openai"))
-    default_model: str = Field(default=os.getenv("DEFAULT_LLM_MODEL", "gpt-4o-mini"))
+    default_provider: str = Field(
+        default=os.getenv("DEFAULT_LLM_PROVIDER", "ollama")
+    )
+    default_model: str = Field(
+        default=os.getenv("DEFAULT_LLM_MODEL", "phi3")
+    )
     openai_api_key: str = Field(default=os.getenv("OPENAI_API_KEY", ""))
     anthropic_api_key: str = Field(default=os.getenv("ANTHROPIC_API_KEY", ""))
     groq_api_key: str = Field(default=os.getenv("GROQ_API_KEY", ""))
+    ollama_base_url: str = Field(
+        default=os.getenv("OLLAMA_BASE_URL", "http://ollama:11434")
+    )
     available_models: List[dict] = Field(
         default_factory=lambda: [
+            {"provider": "ollama", "model": "phi3"},
+            {"provider": "ollama", "model": "deepseek-r1:6.7b"},
             {"provider": "openai", "model": "gpt-4o-mini"},
             {"provider": "openai", "model": "gpt-4.1-mini"},
             {"provider": "anthropic", "model": "claude-3-haiku-20240307"},
