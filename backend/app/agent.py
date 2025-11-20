@@ -53,6 +53,21 @@ class TimelineStep(BaseCallbackHandler):
         step["output"] = str(error)
 
 
+def _build_langfuse_handler() -> Optional[LangfuseCallbackHandler]:
+    """Instantiate Langfuse callback only when real credentials are provided."""
+    if not settings.langfuse_public_key or not settings.langfuse_secret_key:
+        return None
+    if settings.langfuse_public_key == "public-placeholder":
+        return None
+    if settings.langfuse_secret_key == "secret-placeholder":
+        return None
+    return LangfuseCallbackHandler(
+        public_key=settings.langfuse_public_key,
+        secret_key=settings.langfuse_secret_key,
+        host=settings.langfuse_host,
+    )
+
+
 def _resolve_llm(provider: Optional[str], model: Optional[str]) -> BaseChatModel:
     provider = provider or settings.default_provider
     model = model or settings.default_model
@@ -98,7 +113,10 @@ def run_agent(
     tools = build_tools()
     rag_docs = similarity_search(query, k=3)
     timeline_handler = TimelineStep()
-    langfuse_handler = LangfuseCallbackHandler()
+    langfuse_handler = _build_langfuse_handler()
+    callbacks: List[BaseCallbackHandler] = [timeline_handler]
+    if langfuse_handler:
+        callbacks.append(langfuse_handler)
 
     agent_executor = initialize_agent(
         tools,
@@ -114,7 +132,7 @@ def run_agent(
     )
     result = agent_executor.invoke(
         {"input": agent_input},
-        callbacks=[timeline_handler, langfuse_handler],
+        callbacks=callbacks,
     )
     return {
         "final_answer": result.get("output"),

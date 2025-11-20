@@ -28,6 +28,7 @@ frontend/pnpm-debug.log*
 # Environment / Secrets
 .env
 .env.*
+!.env.example
 backend/.env
 frontend/.env
 
