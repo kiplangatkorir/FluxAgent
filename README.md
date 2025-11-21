@@ -25,7 +25,7 @@ Full-stack AI agent platform with FastAPI, LangChain, pgvector retrieval, Langfu
 2. **Prep Ollama models (host machine)**
    ```bash
    ollama pull phi3
-   ollama pull deepseek-r1:6.7b
+   ollama pull mistral:7b
    ```
    Leave `ollama serve` running so the backend can reach it via `http://host.docker.internal:11434`.
 

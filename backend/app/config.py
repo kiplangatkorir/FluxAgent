@@ -48,7 +48,7 @@ class Settings(BaseModel):
     available_models: List[dict] = Field(
         default_factory=lambda: [
             {"provider": "ollama", "model": "phi3"},
-            {"provider": "ollama", "model": "deepseek-r1:6.7b"},
+            {"provider": "ollama", "model": "mistral:7b"},
             {"provider": "openai", "model": "gpt-4o-mini"},
             {"provider": "openai", "model": "gpt-4.1-mini"},
             {"provider": "anthropic", "model": "claude-3-haiku-20240307"},
