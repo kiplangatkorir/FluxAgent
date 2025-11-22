@@ -104,7 +104,7 @@ services:
       - langfuse_redis_data:/data
 
   langfuse-minio:
-    image: minio/minio:RELEASE.2024-08-10T18-41-49Z
+    image: minio/minio:latest
     restart: unless-stopped
     entrypoint: sh
     command: >
