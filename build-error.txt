@@ -6,3 +6,164 @@
 #2 transferring dockerfile:
 #2 transferring dockerfile: 559B 0.5s done
 #2 DONE 4.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.11-slim
+#3 DONE 4.2s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 2B 0.1s done
+#4 DONE 1.7s
+
+#5 [1/7] FROM docker.io/library/python:3.11-slim@sha256:193fdd0bbcb3d2ae612bd6cc3548d2f7c78d65b549fcaa8af75624c47474444d
+#5 ...
+
+#6 [internal] load build context
+#6 DONE 0.0s
+
+#5 [1/7] FROM docker.io/library/python:3.11-slim@sha256:193fdd0bbcb3d2ae612bd6cc3548d2f7c78d65b549fcaa8af75624c47474444d
+#5 resolve docker.io/library/python:3.11-slim@sha256:193fdd0bbcb3d2ae612bd6cc3548d2f7c78d65b549fcaa8af75624c47474444d
+#5 resolve docker.io/library/python:3.11-slim@sha256:193fdd0bbcb3d2ae612bd6cc3548d2f7c78d65b549fcaa8af75624c47474444d 3.1s done
+#5 DONE 3.5s
+
+#6 [internal] load build context
+#6 transferring context:
+#6 transferring context: 355B 0.1s done
+#6 DONE 1.3s
+
+#7 [3/7] RUN apt-get update --fix-missing &&     apt-get install -y --no-install-recommends build-essential gcc &&     rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [2/7] WORKDIR /app
+#8 CACHED
+
+#9 [4/7] COPY requirements.txt .
+#9 CACHED
+
+#10 [5/7] RUN pip install --no-cache-dir -r requirements.txt
+#10 87.23 Collecting fastapi==0.115.0 (from -r requirements.txt (line 1))
+#10 87.96   Downloading fastapi-0.115.0-py3-none-any.whl.metadata (27 kB)
+#10 88.25 Collecting uvicorn==0.30.6 (from uvicorn[standard]==0.30.6->-r requirements.txt (line 2))
+#10 88.43   Downloading uvicorn-0.30.6-py3-none-any.whl.metadata (6.6 kB)
+#10 88.98 Collecting langchain==0.3.4 (from -r requirements.txt (line 3))
+#10 89.17   Downloading langchain-0.3.4-py3-none-any.whl.metadata (7.1 kB)
+#10 89.40 Collecting langchain-openai==0.2.3 (from -r requirements.txt (line 4))
+#10 89.58   Downloading langchain_openai-0.2.3-py3-none-any.whl.metadata (2.6 kB)
+#10 89.80 Collecting langchain-anthropic==0.2.1 (from -r requirements.txt (line 5))
+#10 89.98   Downloading langchain_anthropic-0.2.1-py3-none-any.whl.metadata (2.3 kB)
+#10 90.19 Collecting langchain-groq==0.1.5 (from -r requirements.txt (line 6))
+#10 90.38   Downloading langchain_groq-0.1.5-py3-none-any.whl.metadata (2.8 kB)
+#10 90.93 Collecting langchain-community==0.3.2 (from -r requirements.txt (line 7))
+#10 91.12   Downloading langchain_community-0.3.2-py3-none-any.whl.metadata (2.8 kB)
+#10 91.39 Collecting langchain-postgres==0.0.16 (from -r requirements.txt (line 8))
+#10 91.58   Downloading langchain_postgres-0.0.16-py3-none-any.whl.metadata (7.1 kB)
+#10 92.01 Collecting langfuse==2.42.0 (from -r requirements.txt (line 9))
+#10 92.27   Downloading langfuse-2.42.0-py3-none-any.whl.metadata (3.1 kB)
+#10 93.21 Collecting sqlalchemy==2.0.35 (from -r requirements.txt (line 10))
+#10 93.39   Downloading SQLAlchemy-2.0.35-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.6 kB)
+#10 93.73 Collecting psycopg2-binary==2.9.9 (from -r requirements.txt (line 11))
+#10 93.93   Downloading psycopg2_binary-2.9.9-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.4 kB)
+#10 94.12 Collecting pgvector==0.2.5 (from -r requirements.txt (line 12))
+#10 94.31   Downloading pgvector-0.2.5-py2.py3-none-any.whl.metadata (9.9 kB)
+#10 95.03 Collecting pydantic==2.9.2 (from -r requirements.txt (line 13))
+#10 95.22   Downloading pydantic-2.9.2-py3-none-any.whl.metadata (149 kB)
+#10 95.59      ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü 149.4/149.4 kB 404.6 kB/s eta 0:00:00
+#10 95.78 Collecting python-multipart==0.0.9 (from -r requirements.txt (line 14))
+#10 95.96   Downloading python_multipart-0.0.9-py3-none-any.whl.metadata (2.5 kB)
+#10 96.18 Collecting pypdf==5.0.1 (from -r requirements.txt (line 15))
+#10 96.37   Downloading pypdf-5.0.1-py3-none-any.whl.metadata (7.4 kB)
+#10 96.59 Collecting requests==2.32.3 (from -r requirements.txt (line 16))
+#10 96.78   Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+#10 97.93 Collecting numpy==1.26.4 (from -r requirements.txt (line 17))
+#10 98.12   Downloading numpy-1.26.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+#10 98.17      ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü 61.0/61.0 kB 1.5 MB/s eta 0:00:00
+#10 98.48 Collecting sentence-transformers==3.0.1 (from -r requirements.txt (line 18))
+#10 98.66   Downloading sentence_transformers-3.0.1-py3-none-any.whl.metadata (10 kB)
+#10 98.92 Collecting starlette<0.39.0,>=0.37.2 (from fastapi==0.115.0->-r requirements.txt (line 1))
+#10 99.11   Downloading starlette-0.38.6-py3-none-any.whl.metadata (6.0 kB)
+#10 99.36 Collecting typing-extensions>=4.8.0 (from fastapi==0.115.0->-r requirements.txt (line 1))
+#10 99.54   Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+#10 99.76 Collecting click>=7.0 (from uvicorn==0.30.6->uvicorn[standard]==0.30.6->-r requirements.txt (line 2))
+#10 99.95   Downloading click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+#10 100.1 Collecting h11>=0.8 (from uvicorn==0.30.6->uvicorn[standard]==0.30.6->-r requirements.txt (line 2))
+#10 100.3   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#10 100.6 Collecting PyYAML>=5.3 (from langchain==0.3.4->-r requirements.txt (line 3))
+#10 101.2   Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+#10 103.0 Collecting aiohttp<4.0.0,>=3.8.3 (from langchain==0.3.4->-r requirements.txt (line 3))
+#10 103.3   Downloading aiohttp-3.13.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.1 kB)
+#10 103.6 Collecting langchain-core<0.4.0,>=0.3.12 (from langchain==0.3.4->-r requirements.txt (line 3))
+#10 103.7   Downloading langchain_core-0.3.80-py3-none-any.whl.metadata (3.2 kB)
+#10 103.9 Collecting langchain-text-splitters<0.4.0,>=0.3.0 (from langchain==0.3.4->-r requirements.txt (line 3))
+#10 104.1   Downloading langchain_text_splitters-0.3.11-py3-none-any.whl.metadata (1.8 kB)
+#10 104.8 Collecting langsmith<0.2.0,>=0.1.17 (from langchain==0.3.4->-r requirements.txt (line 3))
+#10 105.1   Downloading langsmith-0.1.147-py3-none-any.whl.metadata (14 kB)
+#10 105.3 Collecting tenacity!=8.4.0,<10,>=8.1.0 (from langchain==0.3.4->-r requirements.txt (line 3))
+#10 105.5   Downloading tenacity-9.1.2-py3-none-any.whl.metadata (1.2 kB)
+#10 106.6 Collecting openai<2.0.0,>=1.52.0 (from langchain-openai==0.2.3->-r requirements.txt (line 4))
+#10 106.9   Downloading openai-1.109.1-py3-none-any.whl.metadata (29 kB)
+#10 107.1 Collecting tiktoken<1,>=0.7 (from langchain-openai==0.2.3->-r requirements.txt (line 4))
+#10 107.3   Downloading tiktoken-0.12.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (6.7 kB)
+#10 107.6 Collecting anthropic<1,>=0.30.0 (from langchain-anthropic==0.2.1->-r requirements.txt (line 5))
+#10 107.9   Downloading anthropic-0.74.1-py3-none-any.whl.metadata (28 kB)
+#10 108.1 Collecting defusedxml<0.8.0,>=0.7.1 (from langchain-anthropic==0.2.1->-r requirements.txt (line 5))
+#10 108.3   Downloading defusedxml-0.7.1-py2.py3-none-any.whl.metadata (32 kB)
+#10 108.6 Collecting groq<1,>=0.4.1 (from langchain-groq==0.1.5->-r requirements.txt (line 6))
+#10 108.8   Downloading groq-0.36.0-py3-none-any.whl.metadata (16 kB)
+#10 108.8 INFO: pip is looking at multiple versions of langchain-groq to determine which version is compatible with other requirements. This could take a while.
+#10 108.9 ERROR: Cannot install -r requirements.txt (line 3), -r requirements.txt (line 4), -r requirements.txt (line 5) and -r requirements.txt (line 6) because these package versions have conflicting dependencies.
+#10 108.9 
+#10 108.9 The conflict is caused by:
+#10 108.9     langchain 0.3.4 depends on langchain-core<0.4.0 and >=0.3.12
+#10 108.9     langchain-openai 0.2.3 depends on langchain-core<0.4.0 and >=0.3.12
+#10 108.9     langchain-anthropic 0.2.1 depends on langchain-core<0.4.0 and >=0.3.1
+#10 108.9     langchain-groq 0.1.5 depends on langchain-core<0.3 and >=0.1.45
+#10 108.9 
+#10 108.9 To fix this you could try to:
+#10 108.9 1. loosen the range of package versions you've specified
+#10 108.9 2. remove package versions to allow pip attempt to solve the dependency conflict
+#10 108.9 
+#10 108.9 ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+#10 109.9 
+#10 109.9 [notice] A new release of pip is available: 24.0 -> 25.3
+#10 109.9 [notice] To update, run: pip install --upgrade pip
+#10 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [5/7] RUN pip install --no-cache-dir -r requirements.txt:
+108.9     langchain-groq 0.1.5 depends on langchain-core<0.3 and >=0.1.45
+108.9 
+108.9 To fix this you could try to:
+108.9 1. loosen the range of package versions you've specified
+108.9 2. remove package versions to allow pip attempt to solve the dependency conflict
+108.9 
+108.9 ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+109.9 
+109.9 [notice] A new release of pip is available: 24.0 -> 25.3
+109.9 [notice] To update, run: pip install --upgrade pip
+------
+docker : Dockerfile:13
+At line:1 char:1
++ docker compose build backend 2>&1 | Out-File -FilePath build-error.tx 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Dockerfile:13:String) [],  
+   RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+--------------------
+
+  11 |     
+
+  12 |     COPY requirements.txt .
+
+  13 | >>> RUN pip install --no-cache-dir -r requirements.txt
+
+  14 |     
+
+  15 |     COPY app ./app
+
+--------------------
+
+failed to solve: process "/bin/sh -c pip install --no-cache-dir -r 
+requirements.txt" did not complete successfully: exit code: 1
+
