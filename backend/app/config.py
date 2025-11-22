@@ -79,6 +79,11 @@ class Settings(BaseModel):
     webhook_base_url: str = Field(
         default=os.getenv("WEBHOOK_BASE_URL", "https://webhook.site")
     )
+    
+    # File upload limits (in bytes: 10MB default)
+    max_upload_size: int = Field(
+        default=int(os.getenv("MAX_UPLOAD_SIZE", "10485760"))  # 10MB
+    )
 
     @property
     def database_url(self) -> str:

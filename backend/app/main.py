@@ -1,12 +1,32 @@
+import os
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import get_settings
+from .database import init_db
 from .routes import router
 
 settings = get_settings()
 
-app = FastAPI(title="FluxAgent Backend", version="0.1.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    init_db()
+    os.makedirs(settings.uploads_dir, exist_ok=True)
+    os.makedirs(os.path.dirname(settings.mail_log_path), exist_ok=True)
+    yield
+    # Shutdown (if needed)
+    pass
+
+
+app = FastAPI(
+    title="FluxAgent Backend",
+    version="0.1.0",
+    lifespan=lifespan,
+)
 
 app.add_middleware(
     CORSMiddleware,

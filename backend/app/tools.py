@@ -87,8 +87,12 @@ def _evaluate_expression(expression: str) -> str:
     }
 
     def _eval(node):
-        if isinstance(node, ast.Num):
-            return node.n
+        # Handle constants (int, float) - replaces deprecated ast.Num
+        if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+            return node.value
+        # Handle name constants (True, False, None)
+        if isinstance(node, ast.Constant):
+            raise ValueError(f"Unsupported constant type: {type(node.value)}")
         if isinstance(node, ast.BinOp):
             return allowed_ops[type(node.op)](_eval(node.left), _eval(node.right))
         if isinstance(node, ast.UnaryOp):
