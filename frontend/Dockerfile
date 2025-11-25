@@ -17,12 +17,11 @@ ARG NEXT_PUBLIC_API_BASE_URL
 ENV NODE_ENV=production
 ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
 
-RUN mkdir -p ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
-# Copy public directory if it exists (Next.js may not create it)
-COPY --from=builder /app/public* ./public/ || true
+# Public directory is optional - Next.js will work without it
+RUN mkdir -p ./public || true
 
 EXPOSE 3000
 CMD ["npm", "run", "start"]
