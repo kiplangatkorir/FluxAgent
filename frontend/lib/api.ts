@@ -30,13 +30,15 @@ export async function fetchModels(): Promise<ModelOption[]> {
   return data.options;
 }
 
+export type StepStatus = "pending" | "in_progress" | "done" | "error";
+
 export type AgentResponse = {
   final_answer: string;
   steps: {
     id: string;
     name: string;
     type: string;
-    status: string;
+    status: StepStatus;
     input?: string;
     output?: string;
   }[];
