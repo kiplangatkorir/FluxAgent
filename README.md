@@ -165,12 +165,5 @@ npm run dev
 
 **Contributing / Evaluation checklist**
 - The system demonstrates multiple LLM providers, RAG with pgvector, all six tools, Langfuse instrumentation, and a usable UI with timeline traces.
-- For a technical test submission, ensure `docker-compose.yml`, `env.example`, and this README are present and the full project is pushed to GitHub.
 
---
-If you'd like, I can now:
-- Add a short `curl` example that exercises the `agent/query` endpoint with provider/model.
-- Create a tiny seed script to insert sample documents into pgvector for quick demo.
-- Walk through starting the stack on your machine and confirm Langfuse keys.
-Tell me which next step you prefer.
 
