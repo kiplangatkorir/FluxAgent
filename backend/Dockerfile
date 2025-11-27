@@ -9,12 +9,17 @@ RUN apt-get update --fix-missing && \
     apt-get install -y --no-install-recommends build-essential gcc && \
     rm -rf /var/lib/apt/lists/*
 
-ARG PYTORCH_VERSION=2.4.1+cpu
-ARG PYTORCH_INDEX_URL=https://download.pytorch.org/whl/cpu
+# Install PyTorch CPU version first to avoid downloading CUDA dependencies  
+RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir --index-url ${PYTORCH_INDEX_URL} torch==${PYTORCH_VERSION} && \
-    pip install --no-cache-dir -r requirements.txt
+# Install requirements with PyTorch CPU index as extra index
+# This ensures pip prefers CPU versions if it needs to resolve torch dependencies
+# --upgrade-strategy only-if-needed prevents reinstalling torch if already satisfied
+RUN pip install --no-cache-dir \
+    --extra-index-url https://download.pytorch.org/whl/cpu \
+    --upgrade-strategy only-if-needed \
+    -r requirements.txt
 
 COPY app ./app
 
