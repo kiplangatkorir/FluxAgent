@@ -9,8 +9,12 @@ RUN apt-get update --fix-missing && \
     apt-get install -y --no-install-recommends build-essential gcc && \
     rm -rf /var/lib/apt/lists/*
 
+ARG PYTORCH_VERSION=2.4.1+cpu
+ARG PYTORCH_INDEX_URL=https://download.pytorch.org/whl/cpu
+
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --index-url ${PYTORCH_INDEX_URL} torch==${PYTORCH_VERSION} && \
+    pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
 
